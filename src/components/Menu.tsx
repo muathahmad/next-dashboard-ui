@@ -1,4 +1,4 @@
-const menuItems = [
+const menuItems: IMenuProps[] = [
   {
     title: "MENU",
     items: [
@@ -112,3 +112,48 @@ const menuItems = [
     ],
   },
 ];
+
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+
+interface IMenuItemsProps {
+  icon: string;
+  label: string;
+  href: string;
+  visible: string[];
+}
+
+interface IMenuProps {
+  title: string;
+  items: IMenuItemsProps[];
+}
+export default function Menu() {
+  return (
+    <div className="text-sm pt-2 px-4 pb-4">
+      {menuItems.map((menu) => (
+        <div className="flex flex-col gap-2">
+          <span className="hidden lg:block text-gray-400 font-light my-4">
+            {menu.title}
+          </span>
+          {menu.items.map((item: IMenuItemsProps) => (
+            <Link
+              href={item.href}
+              key={item.label}
+              className="flex items-center cursor-pointer justify-center lg:justify-start gap-4 py-2 text-gray-500"
+            >
+              <Image
+                src={item.icon}
+                alt={item.label}
+                width={20}
+                height={20}
+                className="min-w-5"
+              />
+              <span className="hidden lg:block">{item.label}</span>
+            </Link>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
